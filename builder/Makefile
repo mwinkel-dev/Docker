@@ -8,7 +8,11 @@
 # make [target] remove           ### Remove images locally 
 #
 
+# For arm* builds on amd64, make sure you have the qemu-user-static package installed
+
 DOCKERFLAGS ?=
+
+CMAKE_VERSION ?= 3.31.5
 
 SKIP_FILES := $(wildcard Makefile*) EOL bootstrap raspberrypi-32
 OS_LIST := bootstrap $(sort $(filter-out $(SKIP_FILES),$(wildcard *))) raspberrypi-32
@@ -35,10 +39,7 @@ $(OS_LIST) :
 	    TAG=mdsplus/builder:$@; \
 	    if [ ! -z "$(REMOVE)" ]; then docker rmi -f $$TAG || :; \
 	    else \
-	      if ( echo $@ | grep arm >/dev/null ); then \
-	        docker run --rm --privileged multiarch/qemu-user-static:register --reset; \
-	      fi; \
-	      docker build $(DOCKERFLAGS) --no-cache -t $$TAG $@; \
+	      docker build $(DOCKERFLAGS) --build-arg CMAKE_VERSION=$(CMAKE_VERSION) --no-cache -t $$TAG $@; \
 	      if [ ! -z "$(PUSH)" ]; then \
 	        docker push $$TAG; \
 	        if [ ! -z "$(NOKEEP)" ]; then \
