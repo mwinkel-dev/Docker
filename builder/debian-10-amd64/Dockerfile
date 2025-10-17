@@ -30,6 +30,7 @@ RUN apt-get update \
         libglobus-gss-assist-dev \
         libglobus-gssapi-gsi-dev \
         libglobus-xio-gsi-driver-dev \
+        libhdf5-dev \
         libmotif-dev \
         libpython3-dev \
         libraw1394-dev \

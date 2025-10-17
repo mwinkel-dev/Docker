@@ -21,7 +21,7 @@ RUN yum install -y epel-release \
         globus-common-progs \
         globus-gridmap-callout-error-devel \
         globus-gsi-credential-devel \
-        globus-gsi-proxy-core-devel  \
+        globus-gsi-proxy-core-devel \
         globus-gss-assist-devel \
         globus-gssapi-gsi-devel \
         globus-xio-gsi-driver-devel \

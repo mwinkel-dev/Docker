@@ -26,6 +26,7 @@ RUN apt-get update \
         libglobus-gss-assist-dev \
         libglobus-gssapi-gsi-dev \
         libglobus-xio-gsi-driver-dev \
+        libhdf5-dev \
         libmotif-dev \
         libraw1394-dev \
         libreadline-dev \
@@ -53,7 +54,8 @@ RUN apt-get update \
     && python3 -m pip install numpy --break-system-packages \
     # cleanup
     && rm -rf /tmp/* \
-    && apt-get clean
+    && apt-get clean \
+    && rm -rf ~
 
 CMD [ "/bin/bash" ]
 

@@ -30,6 +30,7 @@ RUN apt-get update \
         libglobus-gssapi-gsi-dev\
         libglobus-gss-assist-dev\
         libglobus-xio-gsi-driver-dev\
+        libhdf5-dev \
         libmotif-dev\
         libraw1394-dev\
         libreadline-dev\

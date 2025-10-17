@@ -25,6 +25,7 @@ RUN apt-get update \
         libglobus-gss-assist-dev \
         libglobus-gssapi-gsi-dev \
         libglobus-xio-gsi-driver-dev \
+        libhdf5-dev \
         libmotif-dev \
         libraw1394-dev \
         libreadline-dev \
@@ -49,7 +50,7 @@ RUN apt-get update \
     && wget https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-linux-x86_64.sh -O /tmp/install-cmake.sh \
     && sh /tmp/install-cmake.sh --skip-license --prefix=/usr/local \
     # Install the latest version of numpy to test against instead of python3-numpy
-    && python3 -m pip install numpy --break-system-packages
+    && python3 -m pip install numpy --break-system-packages \
     # cleanup
     && apt-get clean \
     && rm -rf /tmp/* \

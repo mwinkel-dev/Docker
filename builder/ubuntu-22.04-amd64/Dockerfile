@@ -25,6 +25,7 @@ RUN apt-get update \
         libglobus-gss-assist-dev \
         libglobus-gssapi-gsi-dev \
         libglobus-xio-gsi-driver-dev \
+        libhdf5-dev \
         libmotif-dev \
         libraw1394-dev \
         libreadline-dev \
