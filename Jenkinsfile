@@ -37,10 +37,17 @@ pipeline {
                             OS -> [ "${OS}": {
                                 stage("${OS}") {
 
-                                    def delay = Math.abs(new Random().nextInt(30))
-                                    sleep(time: delay, unit: 'SECONDS')
-
                                     dir("${OS}") {
+                                        // TODO: Improve
+                                        def dockerfileLines = readFile(file: 'Dockerfile').split('\n');
+                                        for (line in dockerfileLines) {
+                                            if (line.startsWith('FROM ')) {
+                                                def baseImage = line.substring(5); // remove prefix "FROM "
+                                                sh "docker pull ${baseImage}"
+                                                break;
+                                            }
+                                        }
+
                                         docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
                                             docker.build("mdsplus/builder:${OS}", '--no-cache .').push();
                                         }

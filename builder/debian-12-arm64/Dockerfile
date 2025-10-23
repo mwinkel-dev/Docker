@@ -1,5 +1,4 @@
-ARG ARCH=arm64
-FROM --platform=linux/${ARCH} arm64v8/debian:bookworm
+FROM --platform=linux/arm64 arm64v8/debian:bookworm
 
 ARG CMAKE_VERSION
 

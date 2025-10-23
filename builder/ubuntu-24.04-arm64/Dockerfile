@@ -1,5 +1,4 @@
-ARG ARCH=arm64
-FROM --platform=linux/${ARCH} arm64v8/ubuntu:noble
+FROM --platform=linux/arm64 arm64v8/ubuntu:noble
 
 ARG CMAKE_VERSION
 
