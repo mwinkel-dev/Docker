@@ -16,9 +16,6 @@ pipeline {
             steps {
                 sh 'printenv'
 
-                // Allow docker to run multiple architectures
-                sh 'docker run --rm --privileged multiarch/qemu-user-static:register --reset'
-
                 cleanWs disableDeferredWipeout: true, deleteDirs: true
             }
         }
@@ -39,6 +36,9 @@ pipeline {
 
                             OS -> [ "${OS}": {
                                 stage("${OS}") {
+
+                                    def delay = Math.abs(new Random().nextInt(30))
+                                    sleep(time: delay, unit: 'SECONDS')
 
                                     dir("${OS}") {
                                         docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {

@@ -12,7 +12,7 @@
 
 DOCKERFLAGS ?=
 
-CMAKE_VERSION ?= 3.31.5
+CMAKE_VERSION ?= 4.1.2
 
 SKIP_FILES := $(wildcard Makefile*) EOL bootstrap raspberrypi-32
 OS_LIST := bootstrap $(sort $(filter-out $(SKIP_FILES),$(wildcard *))) raspberrypi-32
