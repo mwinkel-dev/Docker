@@ -37,7 +37,8 @@ pipeline {
                             OS -> [ "${OS}": {
                                 stage("${OS}") {
                                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                                        sh "make ${OS} pull push"
+                                        sh "make ${OS} pull" // push
+                                        docker.image("mdsplus/builder:${OS}").push();
                                         // docker.build("mdsplus/builder:${OS}", '--no-cache .').push();
                                     }
                                 }

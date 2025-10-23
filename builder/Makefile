@@ -45,7 +45,7 @@ $(OS_LIST) :
 	    if [ ! -z "$(REMOVE)" ]; then docker rmi -f $$TAG || :; \
 	    else \
 	      if [ ! -z "$(PULL)" ]; then \
-	        FROM=$(shell head -n1 $@/Dockerfile | cut -d' ' -f2-); \
+	        FROM=$$(head -n1 $@/Dockerfile | cut -d' ' -f2-); \
 			echo "Pulling $$FROM"; \
 	        docker pull $$FROM || :; \
 	      fi; \
