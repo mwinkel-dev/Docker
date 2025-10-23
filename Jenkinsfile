@@ -36,23 +36,10 @@ pipeline {
 
                             OS -> [ "${OS}": {
                                 stage("${OS}") {
-
-                                    dir("${OS}") {
-                                        // TODO: Improve
-                                        def dockerfileLines = readFile(file: 'Dockerfile').split('\n');
-                                        for (line in dockerfileLines) {
-                                            if (line.startsWith('FROM ')) {
-                                                def baseImage = line.substring(5); // remove prefix "FROM "
-                                                sh "docker pull ${baseImage}"
-                                                break;
-                                            }
-                                        }
-
-                                        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                                            docker.build("mdsplus/builder:${OS}", '--no-cache .').push();
-                                        }
+                                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                                        sh "make ${OS} pull push"
+                                        // docker.build("mdsplus/builder:${OS}", '--no-cache .').push();
                                     }
-                                    
                                 }
                             }]
 

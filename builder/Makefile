@@ -18,10 +18,15 @@ SKIP_FILES := $(wildcard Makefile*) EOL bootstrap raspberrypi-32
 OS_LIST := bootstrap $(sort $(filter-out $(SKIP_FILES),$(wildcard *))) raspberrypi-32
 
 PUSH=$(findstring push,$(MAKECMDGOALS))
+PULL=$(findstring pull,$(MAKECMDGOALS))
 NOKEEP=$(findstring nokeep,$(MAKECMDGOALS))
 REMOVE=$(findstring remove,$(MAKECMDGOALS))
 
 ifeq 'push' '$(filter-out nokeep,$(MAKECMDGOALS))'
+GOALS=$(OS_LIST)
+endif
+
+ifeq 'pull' '$(filter-out nokeep,$(MAKECMDGOALS))'
 GOALS=$(OS_LIST)
 endif
 
@@ -39,6 +44,11 @@ $(OS_LIST) :
 	    TAG=mdsplus/builder:$@; \
 	    if [ ! -z "$(REMOVE)" ]; then docker rmi -f $$TAG || :; \
 	    else \
+	      if [ ! -z "$(PULL)" ]; then \
+	        FROM=$(shell head -n1 $@/Dockerfile | cut -d' ' -f2-); \
+			echo "Pulling $$FROM"; \
+	        docker pull $$FROM || :; \
+	      fi; \
 	      docker build $(DOCKERFLAGS) --build-arg CMAKE_VERSION=$(CMAKE_VERSION) --no-cache -t $$TAG $@; \
 	      if [ ! -z "$(PUSH)" ]; then \
 	        docker push $$TAG; \
@@ -51,6 +61,9 @@ $(OS_LIST) :
 	fi
 
 push: $(GOALS)
+	@:
+
+pull: $(GOALS)
 	@:
 
 nokeep:
